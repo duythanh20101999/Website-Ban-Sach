@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
+
 public class UserDTO extends BaseDTO{
 	protected String name;
 	protected String password;
