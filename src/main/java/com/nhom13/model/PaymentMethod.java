@@ -1,9 +1,8 @@
 package com.nhom13.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -13,14 +12,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Entity
-@Table(name = "category")
-public class Category extends BaseModel{
+@RequiredArgsConstructor
+@Table(name = "payment")
+public class PaymentMethod extends BaseModel{
+
 	@NotBlank
 	private String name;
-	
-	@OneToMany(mappedBy = "category")
-	private List<Book> books;
 	
 }

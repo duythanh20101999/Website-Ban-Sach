@@ -1,16 +1,14 @@
 package com.nhom13.model;
 
-import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -21,27 +19,25 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order extends BaseModel {
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_user", nullable = true)
-	private User user;
+@Table(name = "book")
+public class Book extends BaseModel{
+	@NotBlank
+	private String name;
 	
 	@NotNull
-	private Long totalPrice;
+	private Long price;
 	
-	@Column(name = "date")
-	private Date date;
+	@NotBlank
+	private String authorname;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_payment")
-	private PaymentMethod paymentMethod;
+	@NotBlank
+	private String decripstion;
 	
-	@NotNull
-	private int status;
+	@ManyToOne (fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_category")
+	private Category category;
 	
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "book")
 	private List<OrderDetail> orderDetails;
-	
 
 }
