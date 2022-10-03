@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\thanh\git\Website-Ban-Sach\src\main\java\com\nhom13\dto\OrderDeatailDTO.java
 C:\Users\thanh\git\Website-Ban-Sach\src\main\java\com\nhom13\payload\response\JwtResponse.java
 C:\Users\thanh\git\Website-Ban-Sach\src\main\java\com\nhom13\model\PaymentMethod.java
@@ -38,3 +39,21 @@ C:\Users\thanh\git\Website-Ban-Sach\src\main\java\com\nhom13\repository\RoleRepo
 C:\Users\thanh\git\Website-Ban-Sach\src\main\java\com\nhom13\model\User.java
 C:\Users\thanh\git\Website-Ban-Sach\src\main\java\com\nhom13\payload\response\BaseResponse.java
 C:\Users\thanh\git\Website-Ban-Sach\src\main\java\com\nhom13\security\jwt\JwtEntryPoint.java
+=======
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\dto\OrderDeatailDTO.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\BookApplication.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\model\Book.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\dto\UserDTO.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\model\OrderDetail.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\model\Category.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\dto\CategoryDTO.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\model\PaymentMethod.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\dto\BaseDTO.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\model\User.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\utility\datatype\ERole.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\model\Order.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\model\BaseModel.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\controller\test.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\dto\OrderDTO.java
+C:\Users\hle38\git\Website-Ban-Sach\src\main\java\com\nhom13\dto\BookDTO.java
+>>>>>>> branch 'dev' of https://github.com/duythanh20101999/Website-Ban-Sach.git
