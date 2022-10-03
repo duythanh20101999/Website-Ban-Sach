@@ -1,7 +1,5 @@
 package com.nhom13.dto;
 
-import com.nhom13.utility.datatype.ERole;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,10 +8,14 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 
-public class UserDTO extends BaseDTO{
+public class UserDTO {
+	protected Long id;
 	protected String name;
 	protected String password;
 	protected String username;
 	protected String phone;
-	protected ERole role;
+	protected String email;
+	protected String verificationCode;
+	protected boolean enabled;
+	protected boolean status;
 }
