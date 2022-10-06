@@ -26,9 +26,8 @@ public class BookService implements IBookService {
 		List<Book> books = bookRepo.findAll();
 		List<BookDTO> listBooks = new ArrayList<>(); 
 		for(Book book : books){
-			BookDTO bookDTO = new BookDTO();
-			modelMapper.map(book, BookDTO.class);
-			listBooks.add(bookDTO);
+			
+			listBooks.add(modelMapper.map(book, BookDTO.class));
 		}
 		return listBooks;
 	}

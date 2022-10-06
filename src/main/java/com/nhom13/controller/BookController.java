@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nhom13.dto.BookDTO;
+import com.nhom13.model.Book;
+import com.nhom13.repository.BookRepository;
 import com.nhom13.service.impl.IBookService;
 
 @RestController
@@ -22,11 +24,17 @@ import com.nhom13.service.impl.IBookService;
 public class BookController {
 	@Autowired
 	private IBookService bookService;
+	@Autowired
+	private BookRepository bookRepo;
+	
 	@GetMapping("/book")
 	public ResponseEntity<?> getListBook(){
-		List<BookDTO> books = bookService.getListBook();
-		return ResponseEntity.ok(books);
+		
+		return ResponseEntity.ok(bookService.getListBook());
 	}
+//	public List<Book> findALl(){
+//		return this.bookRepo.findAll();
+//	}
 	
 	@GetMapping("/book/{id}")
 	public ResponseEntity<?> getBookByID(@PathVariable long id){

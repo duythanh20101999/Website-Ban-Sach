@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Entity
+@Entity(name = "Book")
 @Table(name = "book")
 public class Book extends BaseModel{
 	@NotBlank
