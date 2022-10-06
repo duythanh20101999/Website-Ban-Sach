@@ -1,5 +1,8 @@
 package com.nhom13.payload.response;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class DataResponse<T> extends BaseResponse {
 	private T data;
+	private List<T> datas = new ArrayList<>();
 
 	public DataResponse(Boolean success, String message, T data) {
 		super(success, message);
