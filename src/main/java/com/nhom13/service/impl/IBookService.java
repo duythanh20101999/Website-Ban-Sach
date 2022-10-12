@@ -10,5 +10,5 @@ public interface IBookService {
 	public List<BookDTO> getListBook();
 	public BookDTO getBookByID(Long id);
 	public DataResponse<?> insert(BookDTO request);
-	
+	public DataResponse<?> update(BookDTO request, Long id);
 }

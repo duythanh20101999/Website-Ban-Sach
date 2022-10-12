@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.nhom13.dto.BookDTO;
 import com.nhom13.model.Book;
+import com.nhom13.model.Category;
 import com.nhom13.payload.response.DataResponse;
 import com.nhom13.repository.BookRepository;
+import com.nhom13.repository.CategoryRepository;
 import com.nhom13.service.impl.IBookService;
 
 import antlr.TokenWithIndex;
@@ -23,6 +25,8 @@ public class BookService implements IBookService {
 	ModelMapper modelMapper;
 	@Autowired
 	BookRepository bookRepo;
+	@Autowired
+	CategoryRepository categoryRepository;
 
 	@Override
 	public List<BookDTO> getListBook() {
@@ -45,8 +49,29 @@ public class BookService implements IBookService {
 	@Override
 	public DataResponse<?> insert(BookDTO request) {
 		DataResponse<?> response = new DataResponse<>();
-		
-		return null;
+		Category category = categoryRepository.findById(request.getId_category()).orElseThrow();
+		Book book = modelMapper.map(request, Book.class);
+		book.setCategory(category);
+		bookRepo.save(book);
+		response.setSuccess(true);
+		response.setMessage("Insert success");
+		return response;
 	}
+
+	@Override
+	public DataResponse<?> update(BookDTO request, Long id) {
+		DataResponse<?> response = new DataResponse<>();
+		Book book = bookRepo.getById(id);
+		book.setName(request.getName());
+		book.setDescription(request.getDescription());
+		book.setAuthorname(request.getAuthorname());
+		book.setPrice(request.getPrice());
+		book.setCategory(categoryRepository.getById(request.getId_category()));
+		bookRepo.save(book);
+		response.setSuccess(true);
+		response.setMessage("Update success");
+		return response;
+	}
+	
 	
 }

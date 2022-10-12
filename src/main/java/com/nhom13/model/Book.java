@@ -35,7 +35,7 @@ public class Book extends BaseModel{
 	@Lob
 	@Column(length = 65535)
 	@NotBlank
-	private String decripstion;
+	private String description;
 	
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_category")
