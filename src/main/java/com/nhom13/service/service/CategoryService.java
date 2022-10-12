@@ -51,17 +51,33 @@ public class CategoryService implements ICategoryService{
 	@Override
 	public DataResponse<?> insert(CategoryDTO request) {
 		DataResponse<?> response = new DataResponse<>();
+		
+		List<Category> categories = repository.getCategoryByName(request.getName());
+		for(Category category : categories) {
+			if(request.getName().equalsIgnoreCase(category.getName())) {
+				response.setMessage("Exist category");
+				response.setSuccess(false);
+				return response;
+			}
+		}
 		Category category = modelMapper.map(request, Category.class);
 		repository.save(category);
 		response.setSuccess(true);
 		response.setMessage("Insert success");
-		
 		return response;
 	}
 
 	@Override
 	public DataResponse<?> update(CategoryDTO request, Long id) {
 		DataResponse<?> response = new DataResponse<>();
+		List<Category> categories = repository.getCategoryByName(request.getName());
+		for(Category category : categories) {
+			if(request.getName().equalsIgnoreCase(category.getName())) {
+				response.setMessage("Exist category");
+				response.setSuccess(false);
+				return response;
+			}
+		}
 		Category category = repository.getReferenceById(id);
 		category.setName(request.getName());
 		repository.save(category);

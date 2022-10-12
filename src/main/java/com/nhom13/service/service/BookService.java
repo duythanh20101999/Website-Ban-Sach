@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.nhom13.dto.BookDTO;
 import com.nhom13.model.Book;
+import com.nhom13.payload.response.DataResponse;
 import com.nhom13.repository.BookRepository;
 import com.nhom13.service.impl.IBookService;
+
+import antlr.TokenWithIndex;
 
 @Service
 @Component
@@ -37,6 +40,13 @@ public class BookService implements IBookService {
 		Book findBook = bookRepo.findById(id).orElseThrow();
 		BookDTO bookDTO = modelMapper.map(findBook, BookDTO.class);
 		return bookDTO;
+	}
+
+	@Override
+	public DataResponse<?> insert(BookDTO request) {
+		DataResponse<?> response = new DataResponse<>();
+		
+		return null;
 	}
 	
 }
