@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	Boolean existsByPhone(String phone);
 	
-	Optional<User> findByEmail(String email);
+	User findByEmail(String email);
 	
 	@Query(value = "select * from user where username = :username and roles = :role", nativeQuery = true)
 	public User findByUsernameWithRole(@Param("username") String username, @Param("role") String role);
@@ -34,4 +34,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	@Query(value = "select * from user where verification_code = :verify", nativeQuery = true)
 	public User findByVerifyCode(@Param("verify") String verify);
+	
+	@Query(value = "update user set user.reset_password_code= :code where user.id = :id", nativeQuery = true)
+	public void updateResetPasswordCode(@Param("code") String code, @Param("id") Long id);
+	
+
 }

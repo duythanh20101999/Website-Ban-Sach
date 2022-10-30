@@ -57,7 +57,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private ERole roles;
 	
-	@Column(name = "verification_code", updatable = false, length = 64)
+	@Column(name = "verification_code", updatable = true, length = 64)
 	private String verificationCode;
 	
 	private boolean enabled;

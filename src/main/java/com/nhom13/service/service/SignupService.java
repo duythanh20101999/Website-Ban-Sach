@@ -1,6 +1,7 @@
 package com.nhom13.service.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -11,12 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.nhom13.dto.UserDTO;
+import com.nhom13.model.OrderDetail;
 import com.nhom13.model.User;
+import com.nhom13.payload.request.EmailRequest;
+import com.nhom13.payload.request.ResetPasswordRequest;
 import com.nhom13.payload.response.DataResponse;
 import com.nhom13.repository.UserRepository;
 import com.nhom13.service.impl.ISignupService;
@@ -119,11 +124,12 @@ public class SignupService implements ISignupService{
 		helper.setText(mailContent, true);
 		mailSender.send(message);
 	}
+	
 
 	@Override
-	public DataResponse<?> enableUser(String verify) {
+	public DataResponse<?> enableUser(String code) {
 		DataResponse<?> response = new DataResponse<>();
-		User user = repository.findByVerifyCode(verify);
+		User user = repository.findByVerifyCode(code);
 		if(user == null || user.isEnabled()) {
 			response.setSuccess(false);
 			response.setMessage("User does not exist or is confirmed");
@@ -136,6 +142,75 @@ public class SignupService implements ISignupService{
 		}
 		return response;
 	}
+
+	@Override
+	public DataResponse<?> updateResetPasswordCode(String email, HttpServletRequest siteURL) throws UnsupportedEncodingException, MessagingException {
+		
+		DataResponse<UserDTO> response = new DataResponse<>();
+		User user = repository.findByEmail(email);
+		if(user != null) {
+			String code = RandomString.make(64);
+			user.setVerificationCode(code);
+			repository.save(user);
+			String resetPasswordLinkString = Utility.getSiteURL(siteURL) +"/reset_password?code="+code;
+			sendMailToChangePassword(email, resetPasswordLinkString);
+			response.setMessage("We have sent a reset password link to your Email.");
+			response.setSuccess(true);
+		}else {
+			response.setMessage("Could not find any user with email: "+ email);
+			response.setSuccess(false);
+		}
+		
+		return response;
+		
+	}
+	
+	public void sendMailToChangePassword(String email, String resetPasswordLink) throws UnsupportedEncodingException, MessagingException {
+		String subject = "Here's link ";
+		String senderName = "Website Book";
+		
+		String mailContent = "<p>Hello,</p>";
+		mailContent += "<p>You have requested to reset your password.</p>";
+		mailContent += "<p>Click the link below to change your password:</p>";
+		mailContent += "<h3><b><a href=\"" + resetPasswordLink + "\">CHANGE MY PASSWORD</a><b></h3>";
+		mailContent += "<p>Ignore this email if you do remember password, or you have not made the request.</p>";
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		
+		helper.setFrom("tranduythanhmutd1999@gmail.com", senderName);
+		helper.setTo(email);
+		helper.setSubject(subject);
+		helper.setText(mailContent, true);
+		mailSender.send(message);
+	}
+
+	@Override
+	public DataResponse<?> updatePassword(HttpServletRequest request, ResetPasswordRequest password) {
+		DataResponse<?> response = new DataResponse<>();
+		
+		User user = repository.findByVerifyCode(request.getParameter("code"));
+		if(user == null) {
+			response.setSuccess(false);
+			response.setMessage("Token not found");
+		} else {
+			if(password.getNewPassword().equals(password.getConfirmPassword())) {
+				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+				String encodePassword = passwordEncoder.encode(password.getNewPassword());
+				user.setPassword(encodePassword);
+				repository.save(user);
+				response.setSuccess(true);
+				response.setMessage("Password has been updated.");
+			}else {
+				response.setSuccess(false);
+				response.setMessage("Password does not match.");
+			}
+		}
+		
+		return  response;
+	}
+	
+	
 
 
 }
