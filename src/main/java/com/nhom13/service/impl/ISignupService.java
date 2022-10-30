@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.nhom13.dto.UserDTO;
 import com.nhom13.model.User;
+import com.nhom13.payload.request.ChangePasswordRequest;
 import com.nhom13.payload.request.EmailRequest;
 import com.nhom13.payload.request.ResetPasswordRequest;
 import com.nhom13.payload.response.DataResponse;
@@ -23,4 +24,6 @@ public interface ISignupService {
 	DataResponse<?> enableUser(String verify);
 	DataResponse<?> updateResetPasswordCode(String email, HttpServletRequest siteURL) throws UnsupportedEncodingException, MessagingException;
 	DataResponse<?> updatePassword(HttpServletRequest request, ResetPasswordRequest password);
+	
+	DataResponse<?> changePassword(String username, ChangePasswordRequest passwordRequest);
 }

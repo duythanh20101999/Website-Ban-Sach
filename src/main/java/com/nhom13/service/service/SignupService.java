@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.nhom13.dto.UserDTO;
 import com.nhom13.model.OrderDetail;
 import com.nhom13.model.User;
+import com.nhom13.payload.request.ChangePasswordRequest;
 import com.nhom13.payload.request.EmailRequest;
 import com.nhom13.payload.request.ResetPasswordRequest;
 import com.nhom13.payload.response.DataResponse;
@@ -208,6 +209,28 @@ public class SignupService implements ISignupService{
 		}
 		
 		return  response;
+	}
+
+	@Override
+	public DataResponse<?> changePassword(String username, ChangePasswordRequest passwordRequest) {
+		DataResponse<?> response = new DataResponse<>();
+		User user = repository.findByUsername(username).get();
+		if(passwordEncoder.matches(passwordRequest.getOldPassword(), user.getPassword())) {
+			if(passwordRequest.getNewPassword().equals(passwordRequest.getConfirmNewPassword())) {
+				String password = passwordEncoder.encode(passwordRequest.getNewPassword());
+				user.setPassword(password);
+				repository.save(user);
+				response.setSuccess(true);
+				response.setMessage("Password has been updated.");
+			}else {
+				response.setSuccess(false);
+				response.setMessage("Password does not match.");
+			}
+		} else {
+			response.setMessage("Incorrect password");
+			response.setSuccess(false);
+		}
+		return response;
 	}
 	
 	
