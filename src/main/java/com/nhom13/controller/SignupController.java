@@ -44,27 +44,27 @@ public class SignupController {
 		return ResponseEntity.ok(signupService.createAdmin(request, role));
 	}
 	
-	@GetMapping("/verify")
+	@GetMapping("/api/verify")
 	public ResponseEntity<?> confirmedEmail(@Param("code") String code){
 		return ResponseEntity.ok(signupService.enableUser(code));
 	}
 	
-	@PostMapping("/forgot_password")
+	@PostMapping("/api/forgot_password")
 	public ResponseEntity<?> updateVerifyCode(@Valid @RequestBody EmailRequest email, HttpServletRequest siteURL) throws UnsupportedEncodingException, MessagingException{
 		return ResponseEntity.ok(signupService.updateResetPasswordCode(email.getEmail(), siteURL));
 	}
 	
-	@GetMapping("/forgot_password")
+	@GetMapping("/api/forgot_password")
 	public ResponseEntity<?> forgotPasswordForm(){
 		return ResponseEntity.ok(new EmailRequest());
 	}
 	
-	@PostMapping("/reset_password")
+	@PostMapping("/api/reset_password")
 	public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest password, HttpServletRequest request){
 		return ResponseEntity.ok(signupService.updatePassword(request, password));
 	}
 	
-	@GetMapping("/reset_password")
+	@GetMapping("/api/reset_password")
 	public ResponseEntity<?> resetPasswordForm(){
 		return ResponseEntity.ok(new ResetPasswordRequest());
 	}
