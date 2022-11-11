@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 
-public class OrderDeatailDTO extends BaseDTO {
+public class OrderDetailDTO extends BaseDTO {
 	protected Long id_order;
 	protected Long quantity;
 	protected Long total;
