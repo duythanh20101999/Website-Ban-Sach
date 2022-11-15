@@ -31,6 +31,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
 	
 	@Modifying	
 	@Query(value = "DELETE FROM order_detail addCart WHERE addCart.id_user=:id_user", nativeQuery = true)
-	void deleteAllUserId(@Param("id_user")Long id_user);
+	void deleteAllUserId(@Param("id_user")long id_user);
+
+	@Modifying	
+	@Query(value = "UPDATE order_detail addCart set addCart.quantity= :quantity, addCart.total= :total WHERE addCart.id_order=:id_order", nativeQuery = true)
+	void updateQtyByCartId(@Param("id_cart")long id_cart, @Param("total")long total, @Param("quantity")long quantity);
 
 }

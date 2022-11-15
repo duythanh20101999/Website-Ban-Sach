@@ -20,7 +20,7 @@ public class OrderDetailService implements IOrderDetailService{
 	OrderDetailRepository orderDetailRepo;
 
 	@Override
-	public List<OrderDetailDTO> addCartByUserIdAndProductId(long id_book, long id_user, long qty, long total) throws Exception {
+	public List<OrderDetailDTO> addCartByUserIdAndProductId(long id_book, long id_user, long quantity, long total) throws Exception {
 		//List<OrderDetail> list = orderDetailRepo.getCartByUserId(id_user);
 		try {
 			if(orderDetailRepo.getCartByproductIdAndUserId(id_book, id_user).isPresent()) {
@@ -28,7 +28,7 @@ public class OrderDetailService implements IOrderDetailService{
 			}
 			OrderDetailDTO obj = new OrderDetailDTO();
 			obj.setId_book(id_book);
-			obj.setQuantity(qty);
+			obj.setQuantity(quantity);
 			obj.setTotal(total);
 			orderDetailRepo.save(obj);
 			return this.getCartByUserId(id_user);
@@ -53,6 +53,11 @@ public class OrderDetailService implements IOrderDetailService{
 	public List<OrderDetailDTO> removeCartByUserId(long id_cart, long id_user) {
 		orderDetailRepo.deleteCartByCartIdAndUserId(id_cart, id_user);
 		return this.getCartByUserId(id_user);
+	}
+
+	@Override
+	public void updateQtyByCartId(long id_cart, long quantity, long total) throws Exception {
+		orderDetailRepo.updateQtyByCartId(id_cart, quantity, total);
 	}
 
 }
