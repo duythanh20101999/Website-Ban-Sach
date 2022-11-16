@@ -19,61 +19,54 @@ import com.nhom13.security.jwt.CustomAccessDeniedHandler;
 import com.nhom13.security.jwt.JwtEntryPoint;
 import com.nhom13.security.jwt.JwtTokenFilter;
 import com.nhom13.security.userprincipal.UserDetailService;
+
 @Configuration
 @EnableAutoConfiguration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailService userDetailService;
 	@Autowired
 	private JwtEntryPoint jwtEntryPoint;
 	@Autowired
 	private CustomAccessDeniedHandler customAccessDeniedHandler;
+
 	@Bean
 	public JwtTokenFilter jwtTokenFilter() {
 		return new JwtTokenFilter();
 	}
-	
+
 	@Override
-	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
+	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
 	}
+
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-	
+
 	@Bean
 	@Override
-	public AuthenticationManager authenticationManager() throws Exception{
+	public AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
 	}
-	
+
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception{
-		httpSecurity.cors().and().csrf().disable()
-			.authorizeRequests().antMatchers("/api/signup", "/api/login", "/api/admin/login").permitAll()
-			.and()
-    		.authorizeRequests()
-			.antMatchers("/api/admin/**", "/test").hasRole("ADMIN")
-			.and()
-			.authorizeRequests()
-			.antMatchers("/api/user/**").hasRole("USER")
-			.and()
-			.authorizeRequests()
-			.antMatchers("/**").permitAll()
-			.anyRequest().authenticated()
-			.and().exceptionHandling()
-			.authenticationEntryPoint(jwtEntryPoint)
-			.and().exceptionHandling()
-			.accessDeniedHandler(customAccessDeniedHandler)
-			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.cors().and().csrf().disable().authorizeRequests()
+				.antMatchers("/api/signup", "/api/login", "/api/admin/login").permitAll().and().authorizeRequests()
+				.antMatchers("/api/admin/**", "/test").hasRole("ADMIN").and().authorizeRequests()
+				.antMatchers("/api/user/**").hasRole("USER").and().authorizeRequests().antMatchers("/**").permitAll()
+				.anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and()
+				.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }

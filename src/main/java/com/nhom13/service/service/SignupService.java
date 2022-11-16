@@ -75,6 +75,11 @@ public class SignupService implements ISignupService{
 	@Override
 	public DataResponse<UserDTO> createUser(UserDTO request, HttpServletRequest siteURL) throws UnsupportedEncodingException, MessagingException {
 		DataResponse<UserDTO> response = new DataResponse<>();
+		if(request.getPassword().length() < 8 || request.getPassword().length() > 30) {
+			response.setSuccess(false);
+			response.setMessage("Invalid password");
+			return response;
+		}
 		if(request.getUsername() != null && userService.existsByUsername(request.getUsername())) {
 			response.setMessage("The username is existed");
 			response.setSuccess(false);
