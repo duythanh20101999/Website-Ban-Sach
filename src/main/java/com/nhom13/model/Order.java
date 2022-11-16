@@ -29,6 +29,12 @@ public class Order extends BaseModel {
 	
 	@NotNull
 	private Long totalPrice;
+	@Column(nullable = false)
+	private String name;
+	@Column(nullable = false)
+	private String phone;
+	@Column(nullable = false)
+	private String address;
 	
 	@Column(name = "date")
 	private Date date;
