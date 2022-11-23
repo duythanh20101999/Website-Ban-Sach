@@ -19,22 +19,22 @@ import com.nhom13.model.OrderDetail;
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
 	
 	
-	@Query(value = "SELECT addCart FROM order_detail addCart WHERE addCart.id_user= :id_user", nativeQuery = true)
-	public  List<OrderDetail> getCartByUserId(@Param("id_user") long id_user);
-	
-	@Query(value = "SELECT addCart FROM order_detail addCart WHERE addCart.id_book= :id_book and addCart.id_user= :id_user", nativeQuery = true)
-	public  Optional<OrderDetail> getCartByproductIdAndUserId(@Param("id_book") long id_book, @Param("id_user") long id_user);
-	
-	@Modifying
-	@Query(value = "DELETE FROM order_detail addCart WHERE addCart.id_cart= :id_cart and addCart.id_user= :id_user", nativeQuery = true)
-	public OrderDetail deleteCartByCartIdAndUserId(@Param("id_cart")long id_cart, @Param("id_user") long id_user);
-	
-	@Modifying	
-	@Query(value = "DELETE FROM order_detail addCart WHERE addCart.id_user=:id_user", nativeQuery = true)
-	void deleteAllUserId(@Param("id_user")long id_user);
-
-	@Modifying	
-	@Query(value = "UPDATE order_detail addCart set addCart.quantity= :quantity, addCart.total= :total WHERE addCart.id_order=:id_order", nativeQuery = true)
-	void updateQtyByCartId(@Param("id_cart")long id_cart, @Param("total")long total, @Param("quantity")long quantity);
+//	@Query(value = "SELECT addCart FROM order_detail addCart WHERE addCart.id_user= :id_user", nativeQuery = true)
+//	public  List<OrderDetail> getCartByUserId(@Param("id_user") long id_user);
+//	
+//	@Query(value = "SELECT addCart FROM order_detail addCart WHERE addCart.id_book= :id_book and addCart.id_user= :id_user", nativeQuery = true)
+//	public  Optional<OrderDetail> getCartByproductIdAndUserId(@Param("id_book") long id_book, @Param("id_user") long id_user);
+//	
+//	@Modifying
+//	@Query(value = "DELETE FROM order_detail addCart WHERE addCart.id_cart= :id_cart and addCart.id_user= :id_user", nativeQuery = true)
+//	public OrderDetail deleteCartByCartIdAndUserId(@Param("id_cart")long id_cart, @Param("id_user") long id_user);
+//	
+//	@Modifying	
+//	@Query(value = "DELETE FROM order_detail addCart WHERE addCart.id_user= :id_user", nativeQuery = true)
+//	void deleteAllUserId(@Param("id_user")long id_user);
+//
+//	@Modifying	
+//	@Query(value = "UPDATE order_detail addCart set addCart.quantity= :quantity, addCart.total= :total WHERE addCart.id_order= :id_order", nativeQuery = true)
+//	void updateQtyByCartId(@Param("id_cart")long id_cart, @Param("total")long total, @Param("quantity")long quantity);
 
 }

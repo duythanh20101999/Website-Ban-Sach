@@ -11,8 +11,10 @@ import lombok.Setter;
 public class BookDTO extends BaseDTO {
 	protected String name;
 	protected Long price;
+	private String image;
 	protected String authorname;
 	protected String description;
 	protected Long id_category;
+	protected String category;
 
 }

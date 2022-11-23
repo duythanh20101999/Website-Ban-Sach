@@ -29,14 +29,21 @@ public class BookService implements IBookService {
 	CategoryRepository categoryRepository;
 
 	@Override
-	public List<BookDTO> getListBook() {
+	public DataResponse<BookDTO> getListBook() {
+		DataResponse<BookDTO> response = new DataResponse<>();
 		List<Book> books = bookRepo.findAll();
 		List<BookDTO> listBooks = new ArrayList<>(); 
 		for(Book book : books){
-			
-			listBooks.add(modelMapper.map(book, BookDTO.class));
+			BookDTO bookDTO = new BookDTO();
+			bookDTO = modelMapper.map(book, BookDTO.class);
+			bookDTO.setId_category(book.getCategory().getId());
+			bookDTO.setCategory(book.getCategory().getName());
+			listBooks.add(bookDTO);
 		}
-		return listBooks;
+		response.setDatas(listBooks);
+		response.setSuccess(true);
+		response.setMessage("Success");
+		return response;
 	}
 
 	@Override

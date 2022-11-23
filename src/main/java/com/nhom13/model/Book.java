@@ -32,6 +32,9 @@ public class Book extends BaseModel{
 	@NotBlank
 	private String authorname;
 	
+	@NotBlank
+	private String image;
+	
 	@Lob
 	@Column(length = 65535)
 	@NotBlank
