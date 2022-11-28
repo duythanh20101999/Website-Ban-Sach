@@ -6,5 +6,6 @@ import com.nhom13.payload.response.OrderResponse;
 public interface IOrderService {
 	DataResponse<OrderResponse> getAllOrders();
 	DataResponse<OrderResponse> getOrderById(Long id);
+	DataResponse<OrderResponse> getOrderByStatus(int status);
 
 }

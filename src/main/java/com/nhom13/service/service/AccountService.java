@@ -73,13 +73,21 @@ public class AccountService implements IAccountService{
 	public DataResponse<?> blockAccountUser(Long id) {
 		DataResponse<?> response = new DataResponse<>();
 		User user = repository.getById(id);
-		if(user!=null && user.isStatus() && user.getRoles().toString().equals("USER")) {
-			user.setStatus(false);
+		if(user!=null && user.getRoles().toString().equals("USER")) {
+			if(user.isStatus()) {
+				user.setStatus(false);
+				repository.save(user);
+				response.setMessage("Blocked this user");
+			}else {
+				user.setStatus(true);
+				repository.save(user);
+				response.setMessage("Open this user");
+			}
 			response.setSuccess(true);
-			response.setMessage("Blocked this user");
+			
 		}else {
 			response.setSuccess(false);
-			response.setMessage("User not found or blocked");
+			response.setMessage("User not found");
 		}
 		
 		return response;

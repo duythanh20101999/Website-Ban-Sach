@@ -13,4 +13,5 @@ public class BookResponse {
 	protected String authorname;
 	protected String description;
 	protected CategoryDTO category;
+	protected Long quantity;
 }

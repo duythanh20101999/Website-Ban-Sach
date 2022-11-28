@@ -15,7 +15,7 @@ public class OrderResponse {
 	private String name;
 	private String phone;
 	private String address;
-	private List<BookDTO> books;
+	private List<BookResponse> books;
 	private String status;
 	private Date date;
 	private Long total_price;
